@@ -1,0 +1,19 @@
+.app {
+    margin: 40px;
+}
+
+.slider-wrap {
+    float: left;
+    width: 50px;
+    height: 80px;
+    margin-right: 40px;
+}
+
+.slider-value {
+    text-align: center;
+    width: 100%;
+}
+
+.rc-slider {
+    margin: 0 auto;
+}
