@@ -1,12 +1,47 @@
 import React, { Component } from 'react'
 import Slider from 'rc-slider'
+import moment from 'moment'
 
 import './App.css'
 import 'rc-slider/assets/index.css'
 
 class App extends Component {
     state = {
-        sliders: [0.25, 0.5, 0.25]
+        start: moment().hours(6).minutes(0).seconds(0).milliseconds(0),
+        sliders: [
+            0,
+            0,
+            0,
+            0,
+            1 / 12,
+            1 / 12,
+            1 / 12,
+            1 / 12,
+            0,
+            0,
+            0,
+            0,
+            1 / 12,
+            1 / 12,
+            1 / 12,
+            1 / 12,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1 / 12,
+            1 / 12,
+            1 / 12,
+            1 / 12,
+            0,
+            0,
+            0,
+            0
+        ]
     }
 
     _handleChange = (index, newValue) => {
@@ -58,12 +93,18 @@ class App extends Component {
     }
 
     render() {
-        const { sliders } = this.state
+        const { start, sliders } = this.state
 
         return (
             <div className="app">
                 {sliders.map((value, idx) =>
                     <div key={idx} className="slider-wrap">
+                        <p className="slider-date">
+                            {moment(start)
+                                .add(15 * idx, 'minutes')
+                                .format('H:mm A')}
+                        </p>
+
                         <Slider
                             vertical
                             min={0}
