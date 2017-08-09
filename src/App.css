@@ -22,3 +22,27 @@
 .rc-slider {
     margin: 0 auto;
 }
+
+.presets {
+    clear: both;
+    display: block;
+    list-style: none;
+    margin: 0; padding: 0;
+    padding-top: 120px;
+}
+
+.preset {
+    cursor: pointer;
+    float: left;
+    padding: 30px;
+    border: 1px solid #d9d9d9;
+    margin-right: 20px;
+}
+
+.preset:hover, .preset--selected {
+    background: #eee;
+}
+
+.preset:last-child {
+    margin-right: 0;
+}

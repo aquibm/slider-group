@@ -2,56 +2,35 @@ import React, { Component } from 'react'
 import Slider from 'rc-slider'
 import moment from 'moment'
 
+import Presets from './presets.js'
+
 import './App.css'
 import 'rc-slider/assets/index.css'
 
 class App extends Component {
     state = {
         start: moment().hours(6).minutes(0).seconds(0).milliseconds(0),
-        sliders: [
-            0,
-            0,
-            0,
-            0,
-            1 / 12,
-            1 / 12,
-            1 / 12,
-            1 / 12,
-            0,
-            0,
-            0,
-            0,
-            1 / 12,
-            1 / 12,
-            1 / 12,
-            1 / 12,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1 / 12,
-            1 / 12,
-            1 / 12,
-            1 / 12,
-            0,
-            0,
-            0,
-            0
-        ]
+        presets: Presets,
+        selectedPreset: Presets.Weekday.name,
+        sliders: Presets.Weekday.values
     }
 
     _handleChange = (index, newValue) => {
-        const oldTotalExcludingCurrent = this.state.sliders
+        const { selectedPreset, sliders, presets } = this.state
+
+        if (selectedPreset !== 'Custom') {
+            this.setState({
+                selectedPreset: 'Custom'
+            })
+        }
+
+        const oldTotalExcludingCurrent = sliders
             .filter((val, idx) => idx !== index)
             .reduce((prev, curr) => prev + curr, 0)
 
         const newTotalExcludingCurrent = 1 - newValue
 
-        const numberOfSlidersToModify = this.state.sliders.length - 1
+        const numberOfSlidersToModify = sliders.length - 1
 
         this.setState(state => ({
             sliders: [
@@ -76,7 +55,21 @@ class App extends Component {
                             numberOfSlidersToModify
                         )
                     )
-            ]
+            ],
+            presets: {
+                ...state.presets,
+                Custom: {
+                    name: 'Custom',
+                    values: sliders
+                }
+            }
+        }))
+    }
+
+    _selectPreset = presetName => {
+        this.setState(state => ({
+            selectedPreset: presetName,
+            sliders: state.presets[presetName].values
         }))
     }
 
@@ -93,7 +86,7 @@ class App extends Component {
     }
 
     render() {
-        const { start, sliders } = this.state
+        const { start, sliders, selectedPreset, presets } = this.state
 
         return (
             <div className="app">
@@ -120,6 +113,19 @@ class App extends Component {
                         </p>
                     </div>
                 )}
+
+                <ul className="presets">
+                    {Object.keys(presets).map(key =>
+                        <li
+                            className={`preset ${selectedPreset === key &&
+                                'preset--selected'}`}
+                            key={key}
+                            onClick={() => this._selectPreset(key)}
+                        >
+                            {key}
+                        </li>
+                    )}
+                </ul>
             </div>
         )
     }
