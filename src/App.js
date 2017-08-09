@@ -16,7 +16,7 @@ class App extends Component {
     }
 
     _handleChange = (index, newValue) => {
-        const { selectedPreset, sliders, presets } = this.state
+        const { selectedPreset, sliders } = this.state
 
         if (selectedPreset !== 'Custom') {
             this.setState({
